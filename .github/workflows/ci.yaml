@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js 22.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22.x
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run dist
+
+    - name: Show us the built files
+      run: ls -al dist/*.*js lib/*.*js
+
+    # node target
+    - name: Unit tests for node build target (mocha cli)
+      run: npm run prepare-test-node && npm run test-node
+
+    # browser target unit tests
+    - name: Disable AppArmor (for puppeteer)
+      run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
+    - name: Unit tests for browser build target (mocha browser)
+      run: npm run prepare-test-browser && npm run test-browser
+  
+    - name: Upload test result screenshot
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: browser-tests-${{ matrix.node-version }}
+        path: screenshot.png
