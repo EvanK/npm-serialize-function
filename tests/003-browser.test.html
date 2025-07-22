@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mocha Tests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/mocha/mocha.css" />
+  </head>
+  <body>
+    <div id="mocha"></div>
+
+    <script type="module" src="https://unpkg.com/chai@4/chai.js"></script>
+    <script type="module" src="https://unpkg.com/mocha/mocha.js"></script>
+    <script type="module" src="https://unpkg.com/sinon@21/pkg/sinon.js"></script>
+
+    <script type="module" class="mocha-init">
+
+import { serialize, deserialize } from './lib/main.js';
+
+mocha.setup({
+  ui: 'bdd',
+  checkLeaks: true,
+  asyncOnly: true,
+});
+chai.config.truncateThreshold = 0;
+const assert = chai.assert;
+
+function useRealCrypto() {
+  if (window.crypto.subtle.digest?.restore) {
+    window.crypto.subtle.digest.restore();
+  }
+}
+
+function useStubbedCrypto() {
+  return sinon.stub(window.crypto.subtle, 'digest');
+}
+
+const testNum = '003';
+
+// TEST_SPEC_START
+// TEST_SPEC_END
+
+    </script>
+    <script type="module" class="mocha-exec">
+
+mocha.run();
+
+    </script>
+  </body>
+</html>

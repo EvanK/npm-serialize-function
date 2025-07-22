@@ -50,4 +50,5 @@ tests/*.ignore.test.cjs
 
 # browser testing
 0*.test.html
+!tests/0*.test.html
 screenshot.png
