@@ -3,9 +3,9 @@
     [
       "@babel/preset-env",
       {
-        "modules": false
+        "modules": false,
+        "targets": "> 0.25%, not dead"
       }
     ]
-  ],
-  "plugins": ["@babel/plugin-transform-nullish-coalescing-operator"]
+  ]
 }
