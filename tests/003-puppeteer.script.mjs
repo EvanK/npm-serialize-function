@@ -11,7 +11,7 @@ const https = {
 };
 
 // serve static files from working dir over ssl
-const server = fastify({ logger: true, https });
+const server = fastify({ https });
 server.register(fastifyStatic, { root: process.cwd() });
 const address = await server.listen();
 

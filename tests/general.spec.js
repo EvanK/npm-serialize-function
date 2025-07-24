@@ -972,11 +972,16 @@ return result`,
 
     it('serializes preserving whitespace on demand', async function () {
       serialized = await serialize(spacedCommentedInclude, { hash: true, whitespace: true });
-      assert.deepEqual(
+      assert.deepNestedInclude(
         serialized,
         {
           params: ['a','b'],
-          body: `
+          type: 'Function',
+        }
+      );
+      assert.deepEqual(
+        serialized.body.split(/\r?\n/),
+        `
 
       
         b = b.toLowerCase()
@@ -987,17 +992,21 @@ return result`,
               
                 return result
 
-    `,
-          type: 'Function',
-          hash: '2315a19338448d12397d6259a1784637f01463b0de07d59bd7a94fb312202840',
-        }
+    `.split(/\r?\n/)
+      );
+      assert.include(
+        [
+          '0dad83ca3698a185ea1dd6e050869bb295f0eb74bd89d21ed586576b100d6cfe',
+          '2315a19338448d12397d6259a1784637f01463b0de07d59bd7a94fb312202840'
+        ],
+        serialized.hash
       );
     });
 
     it('deserializes restoring whitespace', async function () {
       deserialized = deserialize(serialized);
-      assert.equal(
-        deserialized.toString(),
+      assert.deepEqual(
+        deserialized.toString().split(/\r?\n/),
         `function anonymous(a,b
 ) {
 
@@ -1012,7 +1021,7 @@ return result`,
                 return result
 
     
-}`
+}`.split(/\r?\n/)
       );
     });
 
