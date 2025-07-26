@@ -1,6 +1,6 @@
 {
   "name": "serialize-function",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Serializes javascript functions to a JSON-friendly format",
   "author": "Evan Kaufman <evan@evanskaufman.com>",
   "license": "MIT",
