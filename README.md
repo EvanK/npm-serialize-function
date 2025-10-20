@@ -4,14 +4,16 @@
   ![ci status](https://github.com/EvanK/npm-serialize-function/actions/workflows/ci.yaml/badge.svg)
 ](https://github.com/EvanK/npm-serialize-function/actions/workflows/ci.yaml)
 [
-  ![npm](https://img.shields.io/badge/NPM-v1.0.1-orange)
-](https://www.npmjs.com/package/serialize-function)
-[
   ![node.js supported as of v20](https://img.shields.io/badge/Node.js-v20-yellow)
 ](https://nodejs.org/docs/latest-v20.x/api/)
 [
   ![ECMAScript standard supported as of ES2023](https://img.shields.io/badge/ES-2023-green)
 ](https://compat-table.github.io/compat-table/es2016plus/)
+
+[
+  ![npm](https://nodei.co/npm/serialize-function.png)
+](https://www.npmjs.com/package/serialize-function)
+
 
 ## Quickstart
 
