@@ -45,21 +45,21 @@
     "test": "npm run prepare-test-browser && npm run test-browser && npm run prepare-test-node && npm run test-node"
   },
   "devDependencies": {
-    "@babel/cli": "^7.28.3",
-    "@babel/core": "^7.28.5",
-    "@babel/plugin-transform-nullish-coalescing-operator": "^7.27.1",
-    "@babel/preset-env": "^7.28.5",
-    "@eslint/js": "^9.30.1",
-    "@fastify/static": "^8.3.0",
-    "@stylistic/eslint-plugin": "^5.1.0",
-    "chai": "^5.2.0",
-    "eslint": "^9.30.1",
-    "eslint-plugin-mocha": "^11.1.0",
-    "fastify": "^5.4.0",
-    "globals": "^16.3.0",
-    "mocha": "^11.7.1",
+    "@babel/cli": "^7.28.6",
+    "@babel/core": "^7.29.0",
+    "@babel/plugin-transform-nullish-coalescing-operator": "^7.28.6",
+    "@babel/preset-env": "^7.29.0",
+    "@eslint/js": "^10.0.1",
+    "@fastify/static": "^9.0.0",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "chai": "^6.2.2",
+    "eslint": "^10.0.3",
+    "eslint-plugin-mocha": "^11.2.0",
+    "fastify": "^5.8.2",
+    "globals": "^17.4.0",
+    "mocha": "^11.7.5",
     "proxyquire": "^2.1.3",
-    "puppeteer": "^24.14.0",
-    "sinon": "^21.0.0"
+    "puppeteer": "^24.38.0",
+    "sinon": "^21.0.2"
   }
 }
