@@ -27,7 +27,7 @@
   },
   "browser": "./lib/main.js",
   "scripts": {
-    "prepare": "npx puppeteer browsers install",
+    "prepare": "npx puppeteer browsers install chrome",
     "concat-browser": "cat src/001-digest-browser.mjs src/002-hasher.mjs src/003-main.mjs > build-main-browser.mjs",
     "concat-node": "cat src/001-digest-node.mjs src/002-hasher.mjs src/003-main.mjs > build-main-node.mjs",
     "transpile-browser": "babel build-main-browser.mjs --no-babelrc --out-file lib/main.js --config-file ./.babelrc.esm.json",
