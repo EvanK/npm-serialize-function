@@ -48,12 +48,13 @@ jobs:
       run: npm run prepare-test-node && npm run test-node
 
     # browser target unit tests
+    - run: npm run prepare-test-browser
     - name: Unit tests for browser build target (mocha browser)
       uses: mujo-code/puppeteer-headful@18.9.0
       env:
         CI: 'true'
       with:
-        args: npm run prepare-test-browser && npm run test-browser
+        args: npm run test-browser
   
     - name: Upload test result screenshot
       if: always()
