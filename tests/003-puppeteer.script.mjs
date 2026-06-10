@@ -18,7 +18,17 @@ const address = await server.listen();
 // open test page
 const url = `${address}/003-browser.test.html`;
 console.log('Launching puppeteer...');
-const browser = await puppeteer.launch({ acceptInsecureCerts: true, timeout: 0 });
+const browser = await puppeteer.launch({
+  headless: true,
+  defaultViewport: null,
+  acceptInsecureCerts: true,
+  timeout: 0,
+  args: [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+  ],
+  executablePath: process.env.CI ? '/usr/bin/google-chrome-stable' : null,
+});
 console.log('Opening new page...');
 const page = await browser.newPage();
 console.log(`Navigating to: ${url}`);

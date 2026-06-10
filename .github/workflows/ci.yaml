@@ -50,7 +50,9 @@ jobs:
       run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
     - name: Unit tests for browser build target (mocha browser)
       run: npm run prepare-test-browser && npm run test-browser
-  
+      env:
+        CI: 'true'
+
     - name: Upload test result screenshot
       if: always()
       uses: actions/upload-artifact@v4
