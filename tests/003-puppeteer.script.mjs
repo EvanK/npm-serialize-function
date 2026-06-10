@@ -20,12 +20,12 @@ const url = `${address}/003-browser.test.html`;
 console.log('Launching puppeteer...');
 const browser = await puppeteer.launch({
   acceptInsecureCerts: true,
-  headless: true,
   timeout: 0,
   args: [
     '--no-sandbox',
     '--disable-setuid-sandbox',
-  ]
+  ],
+  executablePath: process.env.PUPPETEER_EXEC_PATH,
 });
 console.log('Opening new page...');
 const page = await browser.newPage();

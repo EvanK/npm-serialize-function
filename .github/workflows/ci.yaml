@@ -36,6 +36,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
+      env:
+        PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
     - run: npm run dist
 
     - name: Show us the built files
@@ -46,10 +48,12 @@ jobs:
       run: npm run prepare-test-node && npm run test-node
 
     # browser target unit tests
-    - name: Disable AppArmor (for puppeteer)
-      run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
     - name: Unit tests for browser build target (mocha browser)
-      run: npm run prepare-test-browser && npm run test-browser
+      uses: mujo-code/puppeteer-headful@18
+      env:
+        CI: 'true'
+      with:
+        args: npm run prepare-test-browser && npm run test-browser
   
     - name: Upload test result screenshot
       if: always()
