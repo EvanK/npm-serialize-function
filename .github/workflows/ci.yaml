@@ -49,7 +49,7 @@ jobs:
 
     # browser target unit tests
     - name: Unit tests for browser build target (mocha browser)
-      uses: mujo-code/puppeteer-headful@18
+      uses: mujo-code/puppeteer-headful@18.9.0
       env:
         CI: 'true'
       with:
