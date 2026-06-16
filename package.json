@@ -27,6 +27,7 @@
   },
   "browser": "./lib/main.js",
   "scripts": {
+    "clean": "rm -f ./build-*.*js ./tests/*.ignore.test.cjs ./0*.test.html ./screenshot.png && rm -rf ./lib ./dist",
     "concat-browser": "cat src/001-digest-browser.mjs src/002-hasher.mjs src/003-main.mjs > build-main-browser.mjs",
     "concat-node": "cat src/001-digest-node.mjs src/002-hasher.mjs src/003-main.mjs > build-main-node.mjs",
     "transpile-browser": "babel build-main-browser.mjs --no-babelrc --out-file lib/main.js --config-file ./.babelrc.esm.json",
@@ -42,7 +43,7 @@
     "test-browser": "node ./tests/003-puppeteer.script.mjs",
     "prepare-test-node": "cat tests/001-general.test.template.cjs tests/general.spec.js > tests/001-general.ignore.test.cjs",
     "test-node": "mocha ./tests/**.test.*js",
-    "test": "npm run prepare-test-browser && npm run test-browser && npm run prepare-test-node && npm run test-node"
+    "test": "npm run clean && npm run dist && npm run prepare-test-node && npm run test-node && npm run prepare-test-browser && npm run test-browser"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.6",
