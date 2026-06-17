@@ -1,3 +1,11 @@
+// an error for each purpose, and a purpose for each error
+class JsonError extends Error {};
+class CryptoError extends Error {};
+class SerializeError extends Error {}
+class DeserializeError extends Error {}
+class ChecksumError extends Error {}
+class ConstructError extends Error {}
+
 // function constructors (vanilla `Function` already global)
 const AsyncFunction = async function () {}.constructor;
 const Generator = function* () {}.constructor;
@@ -18,11 +26,33 @@ const formatPatterns = {
   // .5 is body expression | undefined
 };
 
-// an error for each purpose, and a purpose for each error
-class SerializeError extends Error {}
-class DeserializeError extends Error {}
-class ChecksumError extends Error {}
-class ConstructError extends Error {}
+// get a sha hash given an object
+async function hasher(obj) {
+  let json, hashed;
+
+  try {
+    json = JSON.stringify(obj);
+  } catch (cause) {
+    throw new JsonError('Failed to stringify serialized function structure', { cause })
+  }
+
+  try {
+    /* eslint-disable-next-line no-unsafe-optional-chaining */
+    const hashBuffer = await (globalThis?.crypto?.subtle ?? window?.crypto?.subtle).digest(
+      'SHA-256',
+      new TextEncoder().encode(json)
+    );
+
+    hashed = Array.from(new Uint8Array(hashBuffer))
+      .map((item) => item.toString(16).padStart(2, '0'))
+      .join('')
+    ;
+  } catch (cause) {
+    throw new CryptoError('Failed to generate hash digest', { cause });
+  }
+
+  return hashed;
+}
 
 // map a type str to the proper constructor
 function getConstructor(type) {
@@ -118,7 +148,6 @@ function serialize(func, opts) {
   }
 
   if (opts.hash) {
-    // eslint-disable-next-line no-undef
     return hasher(serialized)
       .then(hashed => {
         serialized.hash = hashed;
@@ -140,7 +169,6 @@ function deserialize(struct, opts = { hash: false }) {
     }
     const test = Object.assign({}, struct);
     delete test.hash;
-    // eslint-disable-next-line no-undef
     return hasher(test)
       .then(checksum => {
         if (checksum !== struct.hash) {
