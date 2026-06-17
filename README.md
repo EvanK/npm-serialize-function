@@ -67,7 +67,7 @@ const tamperedFunc = await deserialize(hashedObj, { hash: true });
 // ChecksumError: Checksum failed
 ```
 
-> Under the hood, the browser-based implementation uses the [SubtleCrypto](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto) API, while the node implementation uses the built-in [crypto module](https://nodejs.org/docs/latest-v20.x/api/crypto.html).
+> Under the hood, hashing uses the [SubtleCrypto](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto) API.
 
 ## Whitespace and comments
 

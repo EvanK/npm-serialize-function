@@ -1,4 +1,3 @@
-const realCrypto = require('node:crypto');
 const { config: chaiConfig, assert } = require('chai');
 const proxyquire = require('proxyquire');
 const sinon = require('sinon');
@@ -16,12 +15,13 @@ const { serialize, deserialize } = proxyquire('../dist/main.js', {
 
 // switching between real and stubbed crypto
 function useRealCrypto() {
-  cryptoStub.callsFake((...args) => realCrypto.createHash(...args));
-};
-function useStubbedCrypto() {
-  cryptoStub.reset();
+  if (globalThis.crypto.subtle.digest?.restore) {
+    globalThis.crypto.subtle.digest.restore();
+  }
+}
 
-  return cryptoStub;
+function useStubbedCrypto() {
+  return sinon.stub(globalThis.crypto.subtle, 'digest');
 }
 
 const testNum = '001';
