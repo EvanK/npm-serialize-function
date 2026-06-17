@@ -4,10 +4,10 @@
   ![ci status](https://github.com/EvanK/npm-serialize-function/actions/workflows/ci.yaml/badge.svg)
 ](https://github.com/EvanK/npm-serialize-function/actions/workflows/ci.yaml)
 [
-  ![node.js supported as of v20](https://img.shields.io/badge/Node.js-v20-yellow)
-](https://nodejs.org/docs/latest-v20.x/api/)
+  ![Node.js supported and tested on v20 through v26](https://img.shields.io/badge/Node.js-v20%20--%20v26-seagreen?logo=nodedotjs "Node.js supported and tested on v20 through v26")
+](https://nodejs.org/en/about/previous-releases)
 [
-  ![ECMAScript standard supported as of ES2023](https://img.shields.io/badge/ES-2023-green)
+  ![ECMAScript standard supported as of ES2023](https://img.shields.io/badge/ES-2023-dodgerblue "ECMAScript standard supported as of ES2023")
 ](https://compat-table.github.io/compat-table/es2016plus/)
 
 [
