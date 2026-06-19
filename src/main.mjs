@@ -92,7 +92,9 @@ function serialize(func, opts) {
   // strip any comments
   if (!opts.comments) {
     stringified = stringified
-      .replace(/\/\*[\s\S]*?\*\/|(?<=[^:])\/\/.*|^\/\/.*/g, '')
+      .replace(/("([^\\"]|\\")*")|('([^\\']|\\')*')/g, (m) => m.replace(/\//g, '\1'))
+      .replace(/(\/\*[^*]+\*\/)|(\/\/[^\n]+)/g, '')
+      .replace(/\1/g, '/')
     ;
   }
 
