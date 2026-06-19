@@ -93,7 +93,7 @@ function serialize(func, opts) {
   if (!opts.comments) {
     stringified = stringified
       .replace(/("([^\\"]|\\")*")|('([^\\']|\\')*')/g, (m) => m.replace(/\//g, '\1'))
-      .replace(/(\/\*[^*]+\*\/)|(\/\/[^\n]+)/g, '')
+      .replace(/\/\*[\s\S]*?\*\/|(?<=[^:])\/\/.*|^\/\/.*/g,'')
       .replace(/\1/g, '/')
     ;
   }
