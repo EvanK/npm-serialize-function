@@ -72,6 +72,29 @@ function getConstructor(type) {
   }
 }
 
+// remove comments from stringified function
+// borrowed from https://stackoverflow.com/a/32763310
+function stripComments(str) {
+  const RE_BLOCKS = new RegExp([
+    /\/(\*)[^*]*\*+(?:[^*\/][^*]*\*+)*\//.source,
+    /\/(\/)[^\n]*$/.source,
+    /"(?:[^"\\]*|\\[\S\s])*"|'(?:[^'\\]*|\\[\S\s])*'/.source,
+    /(?:[$\w\)\]]|\+\+|--)\s*\/(?![*\/])/.source,
+    /\/(?=[^*\/])[^[/\\]*(?:(?:\[(?:\\.|[^\]\\]*)*\]|\\.)[^[/\\]*)*?\/[gim]*/.source
+    ].join('|'),
+    'gm'
+  );
+
+  return str.replace(RE_BLOCKS, function (match, mlc, slc) {
+    return mlc
+      ? '  '
+      : slc
+        ? ''
+        : match
+    ;
+  });
+}
+
 function serialize(func, opts) {
   const def = { hash: false, comments: false, whitespace: false };
   opts = (typeof opts === 'object' && null !== opts)
@@ -91,10 +114,7 @@ function serialize(func, opts) {
 
   // strip any comments
   if (!opts.comments) {
-    stringified = stringified
-      .replace(/\/\*[\s\S]*?\*\//g, '')
-      .replace(/\/\/.*$/gm, '')
-    ;
+    stringified = stripComments(stringified);
   }
 
   // strip leading/trailing whitespace from each line

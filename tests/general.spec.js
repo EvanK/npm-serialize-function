@@ -986,7 +986,7 @@ return result`,
       
         b = b.toLowerCase()
 
-          
+            
             const result = a.toLowerCase().startsWith(b)
 
               
@@ -996,8 +996,8 @@ return result`,
       );
       assert.include(
         [
-          '0dad83ca3698a185ea1dd6e050869bb295f0eb74bd89d21ed586576b100d6cfe',
-          '2315a19338448d12397d6259a1784637f01463b0de07d59bd7a94fb312202840'
+          'c0233a7604c684e232978aaaebdc0618b6993de9b78ac209cae63a0500cb981a',
+          '485ec74f7ddcc39433f1171c567787f5f87867dc393b49081774c906211077ed'
         ],
         serialized.hash
       );
@@ -1014,7 +1014,7 @@ return result`,
       
         b = b.toLowerCase()
 
-          
+            
             const result = a.toLowerCase().startsWith(b)
 
               
