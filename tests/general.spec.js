@@ -1044,4 +1044,119 @@ return result`,
 
   });
 
+  describe(`${testNum}Q - Function with embedded comments within template literals`, function () {
+
+    function stringLiteralComments (a,b) {
+      const x = `${/* before */ a + b /* and after */}`;
+      const y = `${
+        // before
+        a * b
+        // and after
+      }`;
+
+      return `${
+        /**
+         * multi comment
+         */
+        [ // single comment
+          x,
+          Number(y).toFixed(2),
+        ].join('\n')
+      }`;
+    }
+    let serialized, deserialized;
+
+    it('serializes with comments removed by default', async function () {
+      serialized = await serialize(stringLiteralComments, { hash: true });
+      assert.deepEqual(
+        serialized,
+        {
+          params: ['a','b'],
+          body: `const x = \`\${ a + b }\`;
+const y = \`\${
+a * b
+}\`;
+return \`\${
+[
+x,
+Number(y).toFixed(2),
+].join('\\n')
+}\`;`,
+          type: 'Function',
+          hash: 'd0410e3949040d1c4b58c7a901e7e119019306fd9d8d05527e9adad5a1fe00f3',
+        }
+      );
+    });
+
+    it('serializes preserving comments on demand', async function () {
+      serialized = await serialize(stringLiteralComments, { hash: true, comments: true });
+      assert.deepEqual(
+        serialized,
+        {
+          params: ['a','b'],
+          body: `const x = \`\${/* before */ a + b /* and after */}\`;
+const y = \`\${
+// before
+a * b
+// and after
+}\`;
+return \`\${
+/**
+* multi comment
+*/
+[ // single comment
+x,
+Number(y).toFixed(2),
+].join('\\n')
+}\`;`,
+          type: 'Function',
+          hash: 'bea71518987ac8bb833801fefe9d64198474f6826115ab26c5637df2e3187d8d',
+        }
+      );
+    });
+
+    it('deserializes restoring comments', async function () {
+      deserialized = deserialize(serialized);
+      assert.equal(
+        deserialized.toString(),
+        `function anonymous(a,b
+) {
+const x = \`\${/* before */ a + b /* and after */}\`;
+const y = \`\${
+// before
+a * b
+// and after
+}\`;
+return \`\${
+/**
+* multi comment
+*/
+[ // single comment
+x,
+Number(y).toFixed(2),
+].join('\\n')
+}\`;
+}`
+      );
+    });
+
+    it('invokes', async function () {
+      assert.equal(deserialized(5, 7.5), '12.5\n37.50');
+    });
+
+    it('checksum works', async function () {
+      await deserialize(serialized, { hash: true });
+      serialized.params.push('c');
+      try {
+        await deserialize(serialized, { hash: true });
+      } catch(err) {
+        assert.include(`${err}`, 'Checksum failed');
+        return;
+      }
+      assert.fail('should have failed checksum');
+    });
+
+  });
+
+
 });
