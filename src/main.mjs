@@ -72,6 +72,85 @@ function getConstructor(type) {
   }
 }
 
+// shamelessly borrowed from: https://j11y.io/javascript/removing-comments-in-javascript/
+function removeComments(input) {
+  // working copy of input as an array, with a leading/trailing buffer
+  let [...output] = `__${input}__`;
+
+  // state tracking
+  const mode = {
+    singleQuote: false,
+    doubleQuote: false,
+    regex: false,
+    blockComment: false,
+    lineComment: false,
+    condComp: false 
+  };
+
+  // work character by character
+  for (let i = 0, l = output.length; i < l; i++) {
+
+    if (mode.regex) {
+      if (output[i] === '/' && output[i-1] !== '\\') mode.regex = false;
+      continue;
+    }
+
+    if (mode.singleQuote) {
+      if (output[i] === '\'' && output[i-1] !== '\\') mode.singleQuote = false;
+      continue;
+    }
+
+    if (mode.doubleQuote) {
+      if (output[i] === '"' && output[i-1] !== '\\') mode.doubleQuote = false;
+      continue;
+    }
+
+    if (mode.blockComment) {
+      if (output[i] === '*' && output[i+1] === '/') {
+        output[i+1] = '';
+        mode.blockComment = false;
+      }
+      output[i] = '';
+      continue;
+    }
+
+    if (mode.lineComment) {
+      if (output[i+1] === '\n' || output[i+1] === '\r') mode.lineComment = false;
+      output[i] = '';
+      continue;
+    }
+
+    if (mode.condComp) {
+      if (output[i-2] === '@' && output[i-1] === '*' && output[i] === '/') mode.condComp = false;
+      continue;
+    }
+
+    mode.doubleQuote = output[i] === '"';
+    mode.singleQuote = output[i] === '\'';
+
+    if (output[i] === '/') {
+      if (output[i+1] === '*' && output[i+2] === '@') {
+        mode.condComp = true;
+        continue;
+      }
+      if (output[i+1] === '*') {
+        output[i] = '';
+        mode.blockComment = true;
+        continue;
+      }
+      if (output[i+1] === '/') {
+        output[i] = '';
+        mode.lineComment = true;
+        continue;
+      }
+      mode.regex = true;
+    }
+
+  }
+
+  return output.join('').slice(2, -2);
+}
+
 function serialize(func, opts) {
   const def = { hash: false, comments: false, whitespace: false };
   opts = (typeof opts === 'object' && null !== opts)
@@ -91,10 +170,7 @@ function serialize(func, opts) {
 
   // strip any comments
   if (!opts.comments) {
-    stringified = stringified
-      .replace(/\/\*[\s\S]*?\*\//g, '')
-      .replace(/\/\/.*$/gm, '')
-    ;
+    stringified = removeComments(stringified);
   }
 
   // strip leading/trailing whitespace from each line
