@@ -1158,5 +1158,173 @@ Number(y).toFixed(2),
 
   });
 
+  describe(`${testNum}R - Function with conditional comments`, function () {
+
+    function ieConditionalComments () {
+      // standard single comment
+      /*@cc_on @*/
+      /*@if (@_jscript_version == 4)
+      return "JavaScript version 4";
+      @else @*/
+      /* standard multiline comment */
+      return "Blah blah blah";
+      /*@end @*/
+    }
+    let serialized, deserialized;
+
+    it('serializes with only conditional comments preserved', async function () {
+      serialized = await serialize(ieConditionalComments, { hash: true });
+      assert.deepEqual(
+        serialized,
+        {
+          params: [],
+          body: `/*@cc_on @*/
+/*@if (@_jscript_version == 4)
+return "JavaScript version 4";
+@else @*/
+return "Blah blah blah";
+/*@end @*/`,
+          type: 'Function',
+          hash: 'd02e74ccdb854ac910573ecb3d7d6bb7820ef9c1b4b124d0f45c7078b6844625',
+        }
+      );
+    });
+
+    it('deserializes restoring conditional comments', async function () {
+      deserialized = deserialize(serialized);
+      assert.equal(
+        deserialized.toString(),
+        `function anonymous(
+) {
+/*@cc_on @*/
+/*@if (@_jscript_version == 4)
+return "JavaScript version 4";
+@else @*/
+return "Blah blah blah";
+/*@end @*/
+}`
+      );
+    });
+
+    it('invokes', async function () {
+      assert.equal(deserialized(), 'Blah blah blah');
+    });
+
+    it('checksum works', async function () {
+      await deserialize(serialized, { hash: true });
+      serialized.params.push('c');
+      try {
+        await deserialize(serialized, { hash: true });
+      } catch(err) {
+        assert.include(`${err}`, 'Checksum failed');
+        return;
+      }
+      assert.fail('should have failed checksum');
+    });
+
+  });
+
+  describe(`${testNum}S - Function with string resembling comments`, function () {
+
+    function stringsNotComments () {
+      // a real comment
+      return ' foo /* not a real comment */ bar ';
+      /* also a real comment */
+    }
+    let serialized, deserialized;
+
+    it('serializes with strings intact', async function () {
+      serialized = await serialize(stringsNotComments, { hash: true });
+      assert.deepEqual(
+        serialized,
+        {
+          params: [],
+          body: `return ' foo /* not a real comment */ bar ';`,
+          type: 'Function',
+          hash: '94f975ff751f26789183008ac35b6d81fdf9db0d9714560d89583d8b57db0a77',
+        }
+      );
+    });
+
+    it('deserializes with strings intact', async function () {
+      deserialized = deserialize(serialized);
+      assert.equal(
+        deserialized.toString(),
+        `function anonymous(
+) {
+return ' foo /* not a real comment */ bar ';
+}`
+      );
+    });
+
+    it('invokes', async function () {
+      assert.equal(deserialized(), ' foo /* not a real comment */ bar ');
+    });
+
+    it('checksum works', async function () {
+      await deserialize(serialized, { hash: true });
+      serialized.params.push('c');
+      try {
+        await deserialize(serialized, { hash: true });
+      } catch(err) {
+        assert.include(`${err}`, 'Checksum failed');
+        return;
+      }
+      assert.fail('should have failed checksum');
+    });
+
+  });
+
+  describe(`${testNum}T - Function with regex resembling comments`, function () {
+
+    function regexNotComments (x) {
+      // a real comment
+      return /[/*.*/]/.test(x);
+      /* also a real comment */
+    }
+    let serialized, deserialized;
+
+    it('serializes with regular expressions intact', async function () {
+      serialized = await serialize(regexNotComments, { hash: true });
+      assert.deepEqual(
+        serialized,
+        {
+          params: ['x'],
+          body: `return /[/*.*/]/.test(x);`,
+          type: 'Function',
+          hash: '0afde372682cb436c0d96a964de8124922c35539e28aa06a05274230c6ba6bf1',
+        }
+      );
+    });
+
+    it('deserializes with regular expressions intact', async function () {
+      deserialized = deserialize(serialized);
+      assert.equal(
+        deserialized.toString(),
+        `function anonymous(x
+) {
+return /[/*.*/]/.test(x);
+}`
+      );
+    });
+
+    it('invokes', async function () {
+      assert.isTrue(deserialized('/'));
+      assert.isFalse(deserialized('!'));
+    });
+
+    it('checksum works', async function () {
+      await deserialize(serialized, { hash: true });
+      serialized.params.push('c');
+      try {
+        await deserialize(serialized, { hash: true });
+      } catch(err) {
+        assert.include(`${err}`, 'Checksum failed');
+        return;
+      }
+      assert.fail('should have failed checksum');
+    });
+
+  });
 
 });
