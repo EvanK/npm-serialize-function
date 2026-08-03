@@ -45,13 +45,13 @@ describe(`${testNum} - General tests`, function () {
         await serialize(new Function(), { hash: true });
       } catch(err) {
         assert.include(`${err}`, 'Failure hashing serialized function');
-        assert.equal(err.constructor.name, 'SerializeError');
+        assert.instanceOf(err, SerializeError);
 
         assert.include(`${err.cause}`, 'Failed to generate hash digest');
-        assert.equal(err.cause.constructor.name, 'CryptoError');
+        assert.instanceOf(err.cause, CryptoError);
 
         assert.include(`${err.cause.cause}`, 'no crypto for you');
-        assert.equal(err.cause.cause.constructor.name, 'Error');
+        assert.instanceOf(err.cause.cause, Error);
 
         return;
       }
@@ -66,13 +66,13 @@ describe(`${testNum} - General tests`, function () {
         await deserialize(input, { hash: true });
       } catch(err) {
         assert.include(`${err}`, 'Failure generating checksum');
-        assert.equal(err.constructor.name, 'DeserializeError');
+        assert.instanceOf(err, DeserializeError);
 
         assert.include(`${err.cause}`, 'Failed to generate hash digest');
-        assert.equal(err.cause.constructor.name, 'CryptoError');
+        assert.instanceOf(err.cause, CryptoError);
 
         assert.include(`${err.cause.cause}`, 'you again?');
-        assert.equal(err.cause.cause.constructor.name, 'Error');
+        assert.instanceOf(err.cause.cause, Error);
         
         return;
       }

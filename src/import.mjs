@@ -1,5 +1,4 @@
 // ESM support
-import { serialize, deserialize } from './main.js';
-
-export { serialize, deserialize }
-export default { serialize, deserialize }
+import * as everything from './main.js';
+export default everything;
+export * from './main.js';

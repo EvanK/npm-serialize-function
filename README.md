@@ -131,6 +131,7 @@ const tamperedFunc = await deserialize(hashedObj, { hash: true });
 
 > Under the hood, hashing uses the [SubtleCrypto](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto) API.
 
+
 ## Whitespace and comments
 
 Line breaks within the function body are preserved and normalized, but all other padding whitespace is removed from the function by default, along with any comments.

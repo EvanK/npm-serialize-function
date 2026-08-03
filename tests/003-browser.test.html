@@ -15,7 +15,11 @@
     <script type="module" class="mocha-init">
 
 import { assert, config as chaiConfig } from 'https://unpkg.com/chai@5/chai.js';
-import { serialize, deserialize, deepSerialize, deepDeserialize } from './lib/main.js';
+import {
+  serialize, deserialize,
+  deepSerialize, deepDeserialize,
+  SerializeError, DeserializeError, CryptoError,
+} from './lib/main.js';
 
 mocha.setup({
   ui: 'bdd',

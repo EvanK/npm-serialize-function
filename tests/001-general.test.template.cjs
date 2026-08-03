@@ -7,7 +7,11 @@ chaiConfig.truncateThreshold = 0;
 // prepare for stubbing/calling through to node:crypto
 const cryptoStub = sinon.stub();
 // proxy the test subjects and use pre-proxied hasher
-const { serialize, deserialize, deepSerialize, deepDeserialize } = proxyquire('../dist/main.js', {
+const {
+  serialize, deserialize,
+  deepSerialize, deepDeserialize,
+  SerializeError, DeserializeError, CryptoError,
+} = proxyquire('../dist/main.js', {
   'node:crypto': {
     createHash: cryptoStub
   },
