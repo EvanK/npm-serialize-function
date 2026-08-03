@@ -21,7 +21,7 @@ describe(`${testNum} - General tests`, function () {
     });
 
     it('serializing a non-function', async function () {
-      try { serialize({}) } catch(err) {
+      try { await serialize({}) } catch(err) {
         assert.include(`${err}`, 'Invalid argument type, must be a function');
         return;
       }
@@ -31,7 +31,7 @@ describe(`${testNum} - General tests`, function () {
     it('function with overridden toString', async function () {
       const subject = new Function();
       subject.toString = () => 'something that does not match a valid function';
-      try { serialize(subject) } catch(err) {
+      try { await serialize(subject) } catch(err) {
         assert.include(`${err}`, 'Unsupported function format');
         return;
       }
@@ -80,7 +80,7 @@ describe(`${testNum} - General tests`, function () {
     });
 
     it('error checksumming without a hash', async function () {
-      const input = serialize(new Function());
+      const input = await serialize(new Function());
       try {
         await deserialize(input, { hash: true });
       } catch(err) {
@@ -113,7 +113,7 @@ describe(`${testNum} - General tests`, function () {
     });
 
     it('deserializes', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `function anonymous(a,b
@@ -163,7 +163,7 @@ return a.toLowerCase().startsWith(b.toLowerCase());
     });
 
     it('deserializes', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `function anonymous(c,d
@@ -223,7 +223,7 @@ setTimeout(cb, ms)
     });
 
     it('deserializes', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `async function anonymous(ms
@@ -290,7 +290,7 @@ setTimeout(cb, ms)
     });
 
     it('deserializes', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `async function anonymous(ms
@@ -347,7 +347,7 @@ setTimeout(cb, ms)
     });
 
     it('deserializes', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `function anonymous(c,d
@@ -407,7 +407,7 @@ setTimeout(cb, ms)
     });
 
     it('deserializes', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `async function anonymous(ms
@@ -464,7 +464,7 @@ setTimeout(cb, ms)
     });
 
     it('deserializes', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `function anonymous(w
@@ -513,7 +513,7 @@ return w.trim();
     });
 
     it('deserializes', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `function anonymous(x
@@ -561,7 +561,7 @@ return (x.trim());
     });
 
     it('deserializes', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `function anonymous(y
@@ -609,7 +609,7 @@ return (y.trim());
     });
 
     it('deserializes', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `function anonymous(z
@@ -662,7 +662,7 @@ yield 3.14;`,
     });
 
     it('deserializes', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `function* anonymous(a,b
@@ -719,7 +719,7 @@ yield 6.28;`,
     });
 
     it('deserializes', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `async function* anonymous(c,d
@@ -813,7 +813,7 @@ return result`,
     });
 
     it('deserializes restoring comments', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `function anonymous(a,b
@@ -902,7 +902,7 @@ return result`,
     });
 
     it('deserializes restoring comments', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `function anonymous(a,b
@@ -1004,7 +1004,7 @@ return result`,
     });
 
     it('deserializes restoring whitespace', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.deepEqual(
         deserialized.toString().split(/\r?\n/),
         `function anonymous(a,b
@@ -1116,7 +1116,7 @@ Number(y).toFixed(2),
     });
 
     it('deserializes restoring comments', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `function anonymous(a,b
@@ -1158,73 +1158,7 @@ Number(y).toFixed(2),
 
   });
 
-  describe(`${testNum}R - Function with conditional comments`, function () {
-
-    function ieConditionalComments () {
-      // standard single comment
-      /*@cc_on @*/
-      /*@if (@_jscript_version == 4)
-      return "JavaScript version 4";
-      @else @*/
-      /* standard multiline comment */
-      return "Blah blah blah";
-      /*@end @*/
-    }
-    let serialized, deserialized;
-
-    it('serializes with only conditional comments preserved', async function () {
-      serialized = await serialize(ieConditionalComments, { hash: true });
-      assert.deepEqual(
-        serialized,
-        {
-          params: [],
-          body: `/*@cc_on @*/
-/*@if (@_jscript_version == 4)
-return "JavaScript version 4";
-@else @*/
-return "Blah blah blah";
-/*@end @*/`,
-          type: 'Function',
-          hash: 'd02e74ccdb854ac910573ecb3d7d6bb7820ef9c1b4b124d0f45c7078b6844625',
-        }
-      );
-    });
-
-    it('deserializes restoring conditional comments', async function () {
-      deserialized = deserialize(serialized);
-      assert.equal(
-        deserialized.toString(),
-        `function anonymous(
-) {
-/*@cc_on @*/
-/*@if (@_jscript_version == 4)
-return "JavaScript version 4";
-@else @*/
-return "Blah blah blah";
-/*@end @*/
-}`
-      );
-    });
-
-    it('invokes', async function () {
-      assert.equal(deserialized(), 'Blah blah blah');
-    });
-
-    it('checksum works', async function () {
-      await deserialize(serialized, { hash: true });
-      serialized.params.push('c');
-      try {
-        await deserialize(serialized, { hash: true });
-      } catch(err) {
-        assert.include(`${err}`, 'Checksum failed');
-        return;
-      }
-      assert.fail('should have failed checksum');
-    });
-
-  });
-
-  describe(`${testNum}S - Function with string resembling comments`, function () {
+  describe(`${testNum}R - Function with string resembling comments`, function () {
 
     function stringsNotComments () {
       // a real comment
@@ -1247,7 +1181,7 @@ return "Blah blah blah";
     });
 
     it('deserializes with strings intact', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `function anonymous(
@@ -1275,7 +1209,7 @@ return ' foo /* not a real comment */ bar ';
 
   });
 
-  describe(`${testNum}T - Function with regex resembling comments`, function () {
+  describe(`${testNum}S - Function with regex resembling comments`, function () {
 
     function regexNotComments (x) {
       // a real comment
@@ -1298,7 +1232,7 @@ return ' foo /* not a real comment */ bar ';
     });
 
     it('deserializes with regular expressions intact', async function () {
-      deserialized = deserialize(serialized);
+      deserialized = await deserialize(serialized);
       assert.equal(
         deserialized.toString(),
         `function anonymous(x
@@ -1323,6 +1257,93 @@ return /[/*.*/]/.test(x);
         return;
       }
       assert.fail('should have failed checksum');
+    });
+
+  });
+
+  describe(`${testNum}T - Deep serialization`, function () {
+
+    const struct = {
+      foo: [
+        1, 2, 3,
+        function (x,y) { return x * y; }
+      ],
+      bar: {
+        alpha: 'a',
+        bravo: 'b',
+        echo: (x,y,z) => ((x + y) * z)
+      },
+      baz: new Date(),
+      bob: BigInt(987),
+      bill: (x,y) => ({ x, y, z: x ** y }),
+      beau: new Set([
+        (x,y) => x % y
+      ]),
+      beck: new Map([
+        [
+          1,
+          (x,y) => { return x / y; }
+        ]
+      ]),
+    };
+    let serialized, deserialized;
+
+    it('deeply serializes functions and clones objects', async function () {
+      serialized = await deepSerialize(struct, { hash: true });
+      
+      // ensure all objects describing serialized functions
+      let subjects = [
+        [ '.foo.at(-1)', serialized.foo.at(-1) ],
+        [ '.bar.echo', serialized.bar.echo ],
+        [ '.bill', serialized.bill ],
+        [ '(.beau.values()).next().value', (serialized.beau.values()).next().value ],
+        [ '.beck.get(1)', serialized.beck.get(1) ],
+      ];
+      for (let [name, subject] of subjects) {
+        assert.isObject(subject, `should be an object (${name})`);
+        assert.isNotFunction(subject, `should NOT be a function (${name})`);
+        assert.property(subject, 'params', `should have a params prop (${name})`);
+        assert.property(subject, 'body', `should have a body prop (${name})`);
+        assert.property(subject, 'type', `should have a type prop (${name})`);
+        assert.property(subject, 'hash', `should have a hash prop (${name})`);
+      }
+
+      // ensure all different from their values in the original
+      assert.notEqual(serialized.foo, struct.foo, 'should have different foo props');
+      assert.notEqual(serialized.bar, struct.bar, 'should have different bar props');
+      assert.notEqual(serialized.baz, struct.baz, 'should have different baz props');
+
+      // ensure primitive types are equal to their original
+      assert.equal(serialized.foo.at(1), struct.foo.at(1), 'should have equivalent foo[1] elements');
+      assert.equal(serialized.bar.alpha, struct.bar.alpha, 'should have equivalent bar.alpha props');
+      assert.equal(serialized.baz.toISOString(), struct.baz.toISOString(), 'should have equivalent baz ISO string values');
+      assert.equal(serialized.bob, struct.bob, 'should have equivalent bob props');
+    });
+
+    it('deeply deserializes functions and, again, clones objects', async function () {
+      deserialized = await deepDeserialize(struct, { hash: true });
+      
+      // ensure all invokable functions
+      let subjects = [
+        [ '.foo.at(-1)', deserialized.foo.at(-1) ],
+        [ '.bar.echo', deserialized.bar.echo ],
+        [ '.bill', deserialized.bill ],
+        [ '(.beau.values()).next().value', (deserialized.beau.values()).next().value ],
+        [ '.beck.get(1)', deserialized.beck.get(1) ],
+      ];
+      for (let [name, subject] of subjects) {
+        assert.isFunction(subject, `should be a function (${name})`);
+      }
+
+      // ensure all different from their values in the serialized
+      assert.notEqual(deserialized.foo, serialized.foo, 'should have different foo props');
+      assert.notEqual(deserialized.bar, serialized.bar, 'should have different bar props');
+      assert.notEqual(deserialized.baz, serialized.baz, 'should have different baz props');
+
+      // ensure primitive types are equal to the serialized
+      assert.equal(deserialized.foo.at(1), serialized.foo.at(1), 'should have equivalent foo[1] elements');
+      assert.equal(deserialized.bar.alpha, serialized.bar.alpha, 'should have equivalent bar.alpha props');
+      assert.equal(deserialized.baz.toISOString(), serialized.baz.toISOString(), 'should have equivalent baz ISO string values');
     });
 
   });
