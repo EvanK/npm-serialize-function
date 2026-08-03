@@ -430,7 +430,7 @@ async function deepSerialize(value, options) {
       (input) => serialize(input, options)
     );
   } catch (cause) {
-    throw new SerializeError(`Failure traversing and serializing`, { cause });
+    throw new SerializeError('Failure traversing and serializing', { cause });
   }
 }
 
@@ -457,7 +457,7 @@ async function deepDeserialize(value, options) {
       )
     );
   } catch (cause) {
-    throw new DeserializeError(`Failure traversing and deserializing`, { cause });
+    throw new DeserializeError('Failure traversing and deserializing', { cause });
   }
 }
 

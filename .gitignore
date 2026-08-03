@@ -45,6 +45,9 @@ build-*.*js
 lib/
 dist/
 
+# jsdoc stuff
+docs/
+
 # node testing
 tests/*.ignore.test.cjs
 

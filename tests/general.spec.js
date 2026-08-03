@@ -1274,7 +1274,7 @@ return /[/*.*/]/.test(x);
         echo: (x,y,z) => ((x + y) * z)
       },
       baz: new Date(),
-      bob: BigInt(987),
+      bob: 987,
       bill: (x,y) => ({ x, y, z: x ** y }),
       beau: new Set([
         (x,y) => x % y
