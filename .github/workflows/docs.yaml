@@ -1,0 +1,60 @@
+name: Regenerate documentation
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tagged version from which to generate docs'
+        required: false
+
+jobs:
+  generate-and-commit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+        fetch-tags: true
+        ref: main
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 24.x
+        cache: 'npm'
+
+    - name: Set target as specified input tag
+      if: ${{ github.event.inputs.tag != '' }}
+      run: echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
+      id: from_input
+    - name: Set target as latest available tag
+      if: ${{ github.event.inputs.tag == '' }}
+      run: echo "TAG=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_OUTPUT
+      id: from_git
+    - name: Checkout latest tag
+      run: git checkout ${{ steps.from_input.outputs.tag }}${{ steps.from_git.outputs.tag }}
+
+    - run: npm ci
+
+    - name: Build html docs
+      run: npm run docs-html
+    - name: Checkout docs branch
+      run: git checkout github-pages
+
+    - name: Remove everything in working dir other than .git and docs directories
+      run: ls -A -1 --ignore '.git' --ignore 'docs' | xargs rm -rf
+
+    - name: Move html jsdocs to working dir and remove docs dir
+      run: |
+        mv -f docs/* ./
+        rm -rf docs/
+
+    - name: Configure, add, commit and push any changes to docs branch
+      run: |
+        git config --global user.email "${{ github.actor }}"
+        git config --global user.name "${{ github.actor }}"
+        git add .
+        git commit -m "Docs updated -- $(date)"
+        git push origin github-pages
+      continue-on-error: true
+  

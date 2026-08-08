@@ -1,0 +1,25 @@
+{
+    "markdown": {
+        "idInHeadings": true
+    },
+    "opts": {
+        "template": "classy-template",
+        "destination": "./docs",
+        "package": "./package.json",
+        "readme": "./README.md"
+    },
+    "plugins": [
+        "classy-template/plugin",
+        "plugins/markdown"
+    ],
+    "source": {
+        "includePattern": "main.mjs$"
+    },
+    "templates": {
+        "classy": {
+            "outputSourceFiles": false,
+            "showGitLink": true,
+            "showVersion": true
+        }
+    }
+}
