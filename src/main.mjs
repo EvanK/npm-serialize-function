@@ -353,9 +353,12 @@ async function traverse(input, tester, converter) {
     return input;
   }
 
-  // clone and return date objects
-  if (input instanceof Date) {
-    return new Date(input);
+  // clone and return these specific objects
+  const nonTraversables = [String, Boolean, Number, Date, RegExp];
+  for (const constructor of nonTraversables) {
+    if (input instanceof constructor) {
+      return new constructor( input.valueOf() );
+    }
   }
 
   // iterate arrays

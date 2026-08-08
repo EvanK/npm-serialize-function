@@ -1285,6 +1285,10 @@ return /[/*.*/]/.test(x);
           (x,y) => { return x / y; }
         ]
       ]),
+      ben: new RegExp('s.+?thing', 'i'),
+      brook: new Number(3.14),
+      bart: new Boolean(0),
+      bert: new String('a string...sort of'),
     };
     let serialized, deserialized;
 
@@ -1312,6 +1316,17 @@ return /[/*.*/]/.test(x);
       assert.notEqual(serialized.foo, struct.foo, 'should have different foo props');
       assert.notEqual(serialized.bar, struct.bar, 'should have different bar props');
       assert.notEqual(serialized.baz, struct.baz, 'should have different baz props');
+      assert.notEqual(serialized.ben, struct.ben, 'should have different baz props');
+      assert.notEqual(serialized.brook, struct.brook, 'should have different brook props');
+      assert.notEqual(serialized.bart, struct.bart, 'should have different bart props');
+      assert.notEqual(serialized.bert, struct.bert, 'should have different bert props');
+
+      // ensure equivalent stringified values of non-traversable objects
+      assert.equal(serialized.baz.toString(), struct.baz.toString(), 'should have equivalent stringified baz prop values');
+      assert.equal(serialized.ben.toString(), struct.ben.toString(), 'should have equivalent stringified ben prop values');
+      assert.equal(serialized.brook.toString(), struct.brook.toString(), 'should have equivalent stringified brook prop values');
+      assert.equal(serialized.bart.toString(), struct.bart.toString(), 'should have equivalent stringified bart prop values');
+      assert.equal(serialized.bert.toString(), struct.bert.toString(), 'should have equivalent stringified bert prop values');
 
       // ensure primitive types are equal to their original
       assert.equal(serialized.foo.at(1), struct.foo.at(1), 'should have equivalent foo[1] elements');
