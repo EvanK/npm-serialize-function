@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>serialize-function</title>
+    <script src="static/classy.js"></script>
+    <script src="static/highlight/highlight.min.js"></script>
+    <script src="static/highlight/langs/javascript.min.js"></script>
+    <script src="static/highlight/langs/json.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="static/highlight/highlight.min.css">
+    <link type="text/css" rel="stylesheet" href="static/classy.css">
+    
+</head>
+
+<body>
+    <header class="page-header">
+        <h1 class="package-details">
+            <a class="package-name" href="./">
+                
+                <span>Home</span>
+            </a>
+            
+                <span class="package-version">
+                    <span class="type-signature">2.0.0</span>
+                </span>
+            
+        </h1>
+        <h2 class="page-title"><span class="ancestors"></span>serialize-function</h2>
+        <div class="page-links">
+            
+                <a href="https://github.com/EvanK/npm-serialize-function" title="View Source on GitHub">
+                    <img alt="View Source on GitHub" src="static/assets/github.png" />
+                </a>
+            
+            <div class="page-nav-toggle">
+                <input type="checkbox" name="tiny-page-nav-toggle" id="tiny-page-nav-toggle" autocomplete="off"/>
+                <label for="tiny-page-nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+            </div>
+        </div>
+    </header>
+    <nav class="page-nav">
+        <label class="hidden" for="tiny-page-nav"></label>
+        <input class="hidden tiny-page-nav-target" type="checkbox" id="tiny-page-nav" autocomplete="off"/>
+        <div class="nav-content">
+            <h3>Classes</h3><ul><li><a href="JsonError.html">JsonError</a></li><li><a href="CryptoError.html">CryptoError</a></li><li><a href="SerializeError.html">SerializeError</a></li><li><a href="DeserializeError.html">DeserializeError</a></li><li><a href="ChecksumError.html">ChecksumError</a></li><li><a href="ConstructError.html">ConstructError</a></li></ul><h3>Globals</h3><ul><li><a href="global.html#serialize">serialize</a></li><li><a href="global.html#deserialize">deserialize</a></li><li><a href="global.html#deepSerialize">deepSerialize</a></li><li><a href="global.html#deepDeserialize">deepDeserialize</a></li></ul>
+        </div>
+    </nav>
+    <main id="main">
+        <article class="content-container main-page">
+    <header class="section-header">
+        <h2 class="page-title"><span class="ancestors"></span>serialize-function</h2>
+    </header>
+    
+        <section class="readme description"><p><a href="https://github.com/EvanK/npm-serialize-function/actions/workflows/ci.yaml">
+<img src="https://github.com/EvanK/npm-serialize-function/actions/workflows/ci.yaml/badge.svg" alt="ci status">
+</a>
+<a href="https://nodejs.org/en/about/previous-releases">
+<img src="https://img.shields.io/badge/Node.js-v20%20--%20v26-seagreen?logo=nodedotjs" alt="Node.js supported and tested on v20 through v26" title="Node.js supported and tested on v20 through v26">
+</a>
+<a href="https://compat-table.github.io/compat-table/es2016plus/">
+<img src="https://img.shields.io/badge/ES-2023-dodgerblue" alt="ECMAScript standard supported as of ES2023" title="ECMAScript standard supported as of ES2023">
+</a></p>
+<p><a href="https://www.npmjs.com/package/serialize-function">
+<img src="https://nodei.co/npm/serialize-function.png" alt="npm">
+</a></p>
+<hr>
+<ul>
+<li><a href="#quickstart">Quickstart</a></li>
+<li><a href="#deep-serialization">Deep serialization</a></li>
+<li><a href="#hashing">Hashing</a></li>
+<li><a href="#whitespace-and-comments">Whitespace and comments</a></li>
+<li><a href="#function-type-support">Function type support</a></li>
+<li><a href="#changelog">Changelog</a></li>
+</ul>
+<h2 id="quickstart">Quickstart</h2>
+<p>Supports both CommonJS and ES Modules:</p>
+<pre class="prettyprint source lang-js"><code>const { serialize, deserialize } = require('serialize-function');
+// or
+import { serialize, deserialize } from 'serialize-function';
+</code></pre>
+<p>Serializes javascript functions to a JSON-encodable object suitable for storage to file or transfer over the wire:</p>
+<pre class="prettyprint source lang-js"><code>function doTheThing(a,b,c,d,e) { return a + b * c / d % e; }
+
+const obj = await serialize(doTheThing);
+console.log(obj);
+// {
+//   params: [ 'a', 'b', 'c', 'd', 'e' ],
+//   body: 'return a + b * c / d % e;',
+//   type: 'Function'
+// }
+</code></pre>
+<p>Deserializes back into an invokable function:</p>
+<pre class="prettyprint source lang-js"><code>const func = await deserialize(obj);
+console.log( func(1, 2, 3, 4, 5) );
+// 2.5
+</code></pre>
+<h2 id="deep-serialization">Deep serialization</h2>
+<p>You may want to deeply serialize <em>any</em> functions nested at arbitrary levels of your data structures. The provided convenience functions will traverse and selectively clone any containing objects, while serializing any functions found:</p>
+<pre class="prettyprint source lang-js"><code>const { deepSerialize, deepDeserialize } = require('serialize-function');
+
+const original = {
+  foo: () =&gt; 'something',
+  bar: [
+    function* (seed = 0) { let n = seed; while(true) { n = n * 2; yield n; } }
+  ],
+  baz: new Date('2026-01-01')
+}
+
+const clone = await deepSerialize(original);
+// {
+//   foo: {
+//     params: [],
+//     body: "return ('something');",
+//     type: 'ArrowFunction'
+//   },
+//   bar: [
+//     {
+//       params: [ 'seed = 0' ],
+//       body: 'let n = seed; while(true) { n = n * 2; yield n; }',
+//       type: 'Generator'
+//     }
+//   ],
+//   baz: 2026-01-01T00:00:00.000Z
+// }
+
+// original container and functions remain unmodified
+original.foo(); // 'something'
+const gen1 = original.bar[0](3.14);
+gen1.next().value; // 6.28
+gen1.next().value; // 12.56
+
+const restored = await deepDeserialize(clone);
+// {
+//   foo: [Function: anonymous],
+//   bar: [ [GeneratorFunction: anonymous] ],
+//   baz: 2026-01-01T00:00:00.000Z
+// }
+
+// deserialized functions remain invokable
+restored.foo(); // 'something'
+const gen2 = restored.bar[0](901364);
+gen2.next().value; // 1802728
+gen2.next().value; // 3605456
+</code></pre>
+<h2 id="hashing">Hashing</h2>
+<p>Optionally supports SHA256 checksum hashing to prevent MITM tampering:</p>
+<pre class="prettyprint source lang-js"><code>const hashedObj = await serialize(doTheThing, { hash: true });
+console.log(hashedObj);
+// {
+//   params: [ 'a', 'b', 'c', 'd', 'e' ],
+//   body: 'return a + b * c / d % e;',
+//   type: 'Function',
+//   hash: '814fab043d5bcee7a589b1d73a9fb42a2d716c3f615056c41a062478e7844827'
+// }
+
+hashedObj.body = 'return doSomethingMalicious(...arguments);';
+const tamperedFunc = await deserialize(hashedObj, { hash: true });
+// ChecksumError: Checksum failed
+</code></pre>
+<blockquote>
+<p>Under the hood, hashing uses the <a href="https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto">SubtleCrypto</a> API.</p>
+</blockquote>
+<h2 id="whitespace-and-comments">Whitespace and comments</h2>
+<p>Line breaks within the function body are preserved and normalized, but all other padding whitespace is removed from the function by default, along with any comments.</p>
+<p>You can optionally preserve either or both, with the corresponding options:</p>
+<pre class="prettyprint source lang-js"><code>function thingNumberTwo(
+  /* marco */
+  a,   b,	c,
+  d,e/* polo */
+) {
+  // add some things
+  const sum = a + b;
+
+  /* multiply by another thing */
+  const product = sum * c;
+
+  // divide by _another_
+  // different thing
+  const quotient = product / d;
+  /*
+    and modulus THAT thing
+  */
+  const remainder = quotient % e;
+  return remainder;
+}
+
+const commentedObj = await serialize(thingNumberTwo, { whitespace: true, comments: true });
+console.log(commentedObj);
+// {
+//   params: [ '\n  /* marco */\n  a', '   b', '\tc', '\n  d', 'e/* polo */\n' ],
+//   body: '\n' +
+//     '  // add some things\n' +
+//     '  const sum = a + b;\n' +
+//     '\n' +
+//     '  /* multiply by another thing */\n' +
+//     '  const product = sum * c;\n' +
+//     '\n' +
+//     '  // divide by _another_\n' +
+//     '  // different thing\n' +
+//     '  const quotient = product / d;\n' +
+//     '  /*\n' +
+//     '    and modulus THAT thing\n' +
+//     '  */\n' +
+//     '  const remainder = quotient % e;\n' +
+//     '  return remainder;\n',
+//   type: 'Function'
+// }
+</code></pre>
+<h2 id="function-type-support">Function type support</h2>
+<p>Arrow functions, generators, and all async variants are supported (contingent on <em>browser support</em> where relevant):</p>
+<pre class="prettyprint source lang-js"><code>await serialize(
+  (i,j,k) =&gt; ({ i, j, k })
+);
+// {
+//   params: [ 'i', 'j', 'k' ],
+//   body: 'return (({ i, j, k }));',
+//   type: 'ArrowFunction'
+// }
+
+await serialize(
+  function* (x,y,z) {
+    yield x;
+    yield y;
+    yield z;
+  }
+);
+// {
+//   params: [ 'x', 'y', 'z' ],
+//   body: 'yield x;\nyield y;\nyield z;',
+//   type: 'Generator'
+// }
+
+await serialize(
+  async (ms) =&gt; new Promise( 
+    resolve =&gt; setTimeout(resolve, ms)
+  )
+);
+// {
+//   params: [ 'ms' ],
+//   body: 'return (new Promise(\nresolve =&gt; setTimeout(resolve, ms)\n));',
+//   type: 'AsyncArrowFunction'
+// }
+</code></pre>
+<blockquote>
+<p>[!NOTE]
+As there is no global <code>Class</code> object constructor, there is no way to safely deserialize <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">ES6 classes</a>.</p>
+<p>As such, ES6 classes are <em>not</em> currently supported for serialization.</p>
+<p>Alternatively, you can rewrite your classes as functions, or transpile them with tools like <a href="https://babeljs.io/docs/babel-plugin-transform-classes/">Babel</a>.</p>
+</blockquote>
+<h2 id="changelog">Changelog</h2>
+<p>Any potentially breaking changes will be documented here.</p>
+<ul>
+<li>1.1.0 - Standardized both node and web builds on SubtleCrypto API</li>
+<li>1.2.0 - Refactored comment stripping, to address potential regex DOS</li>
+<li>2.0.0
+<ul>
+<li>Made all exported functions fully async</li>
+<li>Implemented named captures for format patterns</li>
+<li>Implemented deep de/serialization</li>
+</ul>
+</li>
+</ul></section>
+    
+</article>
+<aside class="content-aside">
+    
+    
+        <div class="toc toc-tiny">
+            <h2 class="page-title"><span class="ancestors"></span>serialize-function</h2>
+            <details class="toc-container">
+                <summary class="toc-title">Table of Contents</summary>
+                <nav class="toc-content"><ul><li><a href="#quickstart">Quickstart</a></li><li><a href="#deep-serialization">Deep serialization</a></li><li><a href="#hashing">Hashing</a></li><li><a href="#whitespace-and-comments">Whitespace and comments</a></li><li><a href="#function-type-support">Function type support</a></li><li><a href="#changelog">Changelog</a></li></ul></nav>
+            </details>
+        </div>
+        <div class="toc toc-regular">
+            <nav class="toc-container">
+                <h5 class="toc-title">Table of Contents</h5>
+                <div class="toc-content"><ul><li><a href="#quickstart">Quickstart</a></li><li><a href="#deep-serialization">Deep serialization</a></li><li><a href="#hashing">Hashing</a></li><li><a href="#whitespace-and-comments">Whitespace and comments</a></li><li><a href="#function-type-support">Function type support</a></li><li><a href="#changelog">Changelog</a></li></ul></div>
+            </nav>
+        </div>
+    
+</aside>
+        <footer>
+            Generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a>
+            using <a href="https://github.com/sleelin/classy-template">classy-template</a>
+            
+                <span class="creation-timestamp">2026-08-08T18:37:16.307Z</span>
+            
+        </footer>
+    </main>
+    <script>hljs.highlightAll();</script>
+</body>
+
+</html>

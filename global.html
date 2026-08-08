@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Globals - Home</title>
+    <script src="static/classy.js"></script>
+    <script src="static/highlight/highlight.min.js"></script>
+    <script src="static/highlight/langs/javascript.min.js"></script>
+    <script src="static/highlight/langs/json.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="static/highlight/highlight.min.css">
+    <link type="text/css" rel="stylesheet" href="static/classy.css">
+    
+</head>
+
+<body>
+    <header class="page-header">
+        <h1 class="package-details">
+            <a class="package-name" href="./">
+                
+                <span>Home</span>
+            </a>
+            
+                <span class="package-version">
+                    <span class="type-signature">2.0.0</span>
+                </span>
+            
+        </h1>
+        <h2 class="page-title"><span class="ancestors"></span>Globals</h2>
+        <div class="page-links">
+            
+                <a href="https://github.com/EvanK/npm-serialize-function" title="View Source on GitHub">
+                    <img alt="View Source on GitHub" src="static/assets/github.png" />
+                </a>
+            
+            <div class="page-nav-toggle">
+                <input type="checkbox" name="tiny-page-nav-toggle" id="tiny-page-nav-toggle" autocomplete="off"/>
+                <label for="tiny-page-nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+            </div>
+        </div>
+    </header>
+    <nav class="page-nav">
+        <label class="hidden" for="tiny-page-nav"></label>
+        <input class="hidden tiny-page-nav-target" type="checkbox" id="tiny-page-nav" autocomplete="off"/>
+        <div class="nav-content">
+            <h3>Classes</h3><ul><li><a href="JsonError.html">JsonError</a></li><li><a href="CryptoError.html">CryptoError</a></li><li><a href="SerializeError.html">SerializeError</a></li><li><a href="DeserializeError.html">DeserializeError</a></li><li><a href="ChecksumError.html">ChecksumError</a></li><li><a href="ConstructError.html">ConstructError</a></li></ul><h3>Globals</h3><ul><li><a href="global.html#serialize">serialize</a></li><li><a href="global.html#deserialize">deserialize</a></li><li><a href="global.html#deepSerialize">deepSerialize</a></li><li><a href="global.html#deepDeserialize">deepDeserialize</a></li></ul>
+        </div>
+    </nav>
+    <main id="main">
+        <article class="content-container">
+    <header class="section-header">
+        <h2 class="page-title"><span class="ancestors"></span>Globals</h2>
+    </header>
+    
+    
+    
+    
+    
+    <section id="methods" class="child-methods">
+        <h3 class="subsection-title">Methods</h3>
+        
+            <div class="subsection-content">
+                <article id="serialize">
+    <header>
+        <h4 class="name"><span class="type-signature">(async) </span>serialize<span class="signature">(func, opts<span class="signature-attributes">nullable</span>)</span><span class="type-signature returns"> &raquo; <a href="SerializeError.html">SerializeError</a></span></h4>
+        
+        <div class="description"><p>Serializes a given function to an object notation</p></div>
+    </header>
+    <section  class="details">
+    <dl class="details-list">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    <div class="detail tag-source">
+        <dt>Source:</dt>
+        
+            <dd><a href="https://github.com/EvanK/npm-serialize-function/blob/1354ff08aef16237626c59dd70dd0fcc21545478/./src/main.mjs/main.mjs#L207">./src/main.mjs/main.mjs, line 207</a></dd>
+        
+    </div>
+
+        
+
+        
+        
+    <div class="detail tag-exceptions">
+        <dt>Throws:</dt>
+        
+            <dd><span class="type-signature">{<span class="param-type"><a href="SerializeError.html">SerializeError</a></span>} </span>undefined</dd>
+        
+    </div>
+
+        
+        
+    </dl>
+</section>
+
+    <section  class="params">
+        <h5 class="subsection-title">Parameters:</h5>
+        <div class="subsection-content">
+            
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            
+            <th class="last">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+                <td class="name">
+                    <code>
+                        func<span class="signature-attributes"></span>
+                    </code>
+                </td>
+            
+
+            <td class="type">
+                <span class="param">
+                    <code>
+    <span class="param-type"><a href="global.html#InvokableFunction">InvokableFunction</a></span>
+</code>
+                </span>
+            </td>
+
+            
+
+            <td class="description last">
+                <p>Function to be serialized</p>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            
+                <td class="name">
+                    <code>
+                        opts<span class="signature-attributes">nullable</span>
+                    </code>
+                </td>
+            
+
+            <td class="type">
+                <span class="param">
+                    <code>
+    <span class="param-type"><a href="global.html#SerializeOptions">SerializeOptions</a></span>
+</code>
+                </span>
+            </td>
+
+            
+
+            <td class="description last">
+                <p>Serialization options</p>
+                
+            </td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        </div>
+    </section>
+
+
+    
+        
+        
+    <section class="returns">
+        
+        <h5 class="subsection-title">Returns:</h5>
+        
+            
+                
+                    
+                    
+    
+    <div class="detail tag-type">
+        <dt>Type:</dt>
+        
+            <dd><span class="signature type-signature">{<span class="param-type"><a href="global.html#SerializedFunction">SerializedFunction</a></span>}</span></dd>
+        
+    </div>
+
+
+                
+            
+        
+    </section>
+
+        
+    
+    
+</article><article id="deserialize">
+    <header>
+        <h4 class="name"><span class="type-signature">(async) </span>deserialize<span class="signature">(struct, opts<span class="signature-attributes">nullable</span>)</span><span class="type-signature returns"> &raquo; <a href="DeserializeError.html">DeserializeError</a>, <a href="ChecksumError.html">ChecksumError</a></span></h4>
+        
+        <div class="description"><p>Deserializes a given object to an invokable function</p></div>
+    </header>
+    <section  class="details">
+    <dl class="details-list">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    <div class="detail tag-source">
+        <dt>Source:</dt>
+        
+            <dd><a href="https://github.com/EvanK/npm-serialize-function/blob/1354ff08aef16237626c59dd70dd0fcc21545478/./src/main.mjs/main.mjs#L299">./src/main.mjs/main.mjs, line 299</a></dd>
+        
+    </div>
+
+        
+
+        
+        
+    <div class="detail tag-exceptions">
+        <dt>Throws:</dt>
+        
+            <dd><span class="type-signature">{<span class="param-type"><a href="DeserializeError.html">DeserializeError</a></span><span class="param-join">|</span><span class="param-type"><a href="ChecksumError.html">ChecksumError</a></span>} </span>undefined</dd>
+        
+    </div>
+
+        
+        
+    </dl>
+</section>
+
+    <section  class="params">
+        <h5 class="subsection-title">Parameters:</h5>
+        <div class="subsection-content">
+            
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            
+            <th class="last">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+                <td class="name">
+                    <code>
+                        struct<span class="signature-attributes"></span>
+                    </code>
+                </td>
+            
+
+            <td class="type">
+                <span class="param">
+                    <code>
+    <span class="param-type"><a href="global.html#SerializedFunction">SerializedFunction</a></span>
+</code>
+                </span>
+            </td>
+
+            
+
+            <td class="description last">
+                <p>Function to be deserialized</p>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            
+                <td class="name">
+                    <code>
+                        opts<span class="signature-attributes">nullable</span>
+                    </code>
+                </td>
+            
+
+            <td class="type">
+                <span class="param">
+                    <code>
+    <span class="param-type"><a href="global.html#DeserializeOptions">DeserializeOptions</a></span>
+</code>
+                </span>
+            </td>
+
+            
+
+            <td class="description last">
+                <p>Deserialization options</p>
+                
+            </td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        </div>
+    </section>
+
+
+    
+        
+        
+    <section class="returns">
+        
+        <h5 class="subsection-title">Returns:</h5>
+        
+            
+                
+                    
+                    
+    
+    <div class="detail tag-type">
+        <dt>Type:</dt>
+        
+            <dd><span class="signature type-signature">{<span class="param-type"><a href="global.html#InvokableFunction">InvokableFunction</a></span>}</span></dd>
+        
+    </div>
+
+
+                
+            
+        
+    </section>
+
+        
+    
+    
+</article><article id="deepSerialize">
+    <header>
+        <h4 class="name"><span class="type-signature">(async) </span>deepSerialize<span class="signature">(value, options<span class="signature-attributes">nullable</span>)</span><span class="type-signature returns"> &raquo; <a href="SerializeError.html">SerializeError</a></span></h4>
+        
+        <div class="description"><p>Accepts and traverses an input value of arbitrary depth, returning a copy with any
+nested functions serialized in the process</p></div>
+    </header>
+    <section  class="details">
+    <dl class="details-list">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    <div class="detail tag-source">
+        <dt>Source:</dt>
+        
+            <dd><a href="https://github.com/EvanK/npm-serialize-function/blob/1354ff08aef16237626c59dd70dd0fcc21545478/./src/main.mjs/main.mjs#L428">./src/main.mjs/main.mjs, line 428</a></dd>
+        
+    </div>
+
+        
+
+        
+        
+    <div class="detail tag-exceptions">
+        <dt>Throws:</dt>
+        
+            <dd><span class="type-signature">{<span class="param-type"><a href="SerializeError.html">SerializeError</a></span>} </span>undefined</dd>
+        
+    </div>
+
+        
+        
+    </dl>
+</section>
+
+    <section  class="params">
+        <h5 class="subsection-title">Parameters:</h5>
+        <div class="subsection-content">
+            
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            
+            <th class="last">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+                <td class="name">
+                    <code>
+                        value<span class="signature-attributes"></span>
+                    </code>
+                </td>
+            
+
+            <td class="type">
+                <span class="param">
+                    <code>
+    <span class="param-type">*</span>
+</code>
+                </span>
+            </td>
+
+            
+
+            <td class="description last">
+                <p>Structure to deeply serialize</p>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            
+                <td class="name">
+                    <code>
+                        options<span class="signature-attributes">nullable</span>
+                    </code>
+                </td>
+            
+
+            <td class="type">
+                <span class="param">
+                    <code>
+    <span class="param-type"><a href="global.html#SerializeOptions">SerializeOptions</a></span>
+</code>
+                </span>
+            </td>
+
+            
+
+            <td class="description last">
+                <p>Serialization options</p>
+                
+            </td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        </div>
+    </section>
+
+
+    
+        
+        
+    <section class="returns">
+        
+        <h5 class="subsection-title">Returns:</h5>
+        
+            
+                
+                    
+                    
+    
+    <div class="detail tag-type">
+        <dt>Type:</dt>
+        
+            <dd><span class="signature type-signature">{<span class="param-type">*</span>}</span></dd>
+        
+    </div>
+
+
+                
+            
+        
+    </section>
+
+        
+    
+    
+</article><article id="deepDeserialize">
+    <header>
+        <h4 class="name"><span class="type-signature">(async) </span>deepDeserialize<span class="signature">(value, options)</span><span class="type-signature returns"> &raquo; <a href="DeserializeError.html">DeserializeError</a></span></h4>
+        
+        <div class="description"><p>Accepts and traverses an input value of arbitrary depth, returning a copy with any
+nested serialized functions deserialized in the process</p></div>
+    </header>
+    <section  class="details">
+    <dl class="details-list">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    <div class="detail tag-source">
+        <dt>Source:</dt>
+        
+            <dd><a href="https://github.com/EvanK/npm-serialize-function/blob/1354ff08aef16237626c59dd70dd0fcc21545478/./src/main.mjs/main.mjs#L449">./src/main.mjs/main.mjs, line 449</a></dd>
+        
+    </div>
+
+        
+
+        
+        
+    <div class="detail tag-exceptions">
+        <dt>Throws:</dt>
+        
+            <dd><span class="type-signature">{<span class="param-type"><a href="DeserializeError.html">DeserializeError</a></span>} </span>undefined</dd>
+        
+    </div>
+
+        
+        
+    </dl>
+</section>
+
+    <section  class="params">
+        <h5 class="subsection-title">Parameters:</h5>
+        <div class="subsection-content">
+            
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            
+            <th class="last">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+                <td class="name">
+                    <code>
+                        value<span class="signature-attributes"></span>
+                    </code>
+                </td>
+            
+
+            <td class="type">
+                <span class="param">
+                    <code>
+    <span class="param-type">*</span>
+</code>
+                </span>
+            </td>
+
+            
+
+            <td class="description last">
+                <p>Structure to deeply deserialize</p>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            
+                <td class="name">
+                    <code>
+                        options<span class="signature-attributes"></span>
+                    </code>
+                </td>
+            
+
+            <td class="type">
+                <span class="param">
+                    <code>
+    <span class="param-type"><a href="global.html#DeserializeOptions">DeserializeOptions</a></span>
+</code>
+                </span>
+            </td>
+
+            
+
+            <td class="description last">
+                <p>Deserialization options</p>
+                
+            </td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        </div>
+    </section>
+
+
+    
+        
+        
+    <section class="returns">
+        
+        <h5 class="subsection-title">Returns:</h5>
+        
+            
+                
+                    
+                    
+    
+    <div class="detail tag-type">
+        <dt>Type:</dt>
+        
+            <dd><span class="signature type-signature">{<span class="param-type">*</span>}</span></dd>
+        
+    </div>
+
+
+                
+            
+        
+    </section>
+
+        
+    
+    
+</article>
+            </div>
+        
+    </section>
+
+    
+    <section id="typedefs" class="child-typedefs">
+        <h3 class="subsection-title">Type Definitions</h3>
+        
+            <div class="subsection-content">
+                <article id="InvokableFunction">
+    <header>
+        <h4 class="name">InvokableFunction<span class="signature">()</span><span class="type-signature returns"></span></h4>
+        
+        <div class="description"><p>Invokable function object</p></div>
+    </header>
+    <section  class="details">
+    <dl class="details-list">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+    
+    <div class="detail tag-type">
+        <dt>Type:</dt>
+        
+            <dd><span class="signature type-signature">{<span class="param-type">function</span><span class="param-join">|</span><span class="param-type">Generator</span><span class="param-join">|</span><span class="param-type">AsyncGenerator</span>}</span></dd>
+        
+    </div>
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    <div class="detail tag-source">
+        <dt>Source:</dt>
+        
+            <dd><a href="https://github.com/EvanK/npm-serialize-function/blob/1354ff08aef16237626c59dd70dd0fcc21545478/./src/main.mjs/main.mjs#L167">./src/main.mjs/main.mjs, line 167</a></dd>
+        
+    </div>
+
+        
+
+        
+        
+        
+        
+    </dl>
+</section>
+
+
+    
+        
+        
+        
+    
+    
+</article><article id="SerializedFunction">
+    <header>
+        <h4 class="name">SerializedFunction</h4>
+        
+        <div class="description"><p>Object notation for serialized functions</p></div>
+    </header>
+    <section  class="details">
+    <dl class="details-list">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+    
+    <div class="detail tag-type">
+        <dt>Type:</dt>
+        
+            <dd><span class="signature type-signature">{<span class="param-type">object</span>}</span></dd>
+        
+    </div>
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    <div class="detail tag-source">
+        <dt>Source:</dt>
+        
+            <dd><a href="https://github.com/EvanK/npm-serialize-function/blob/1354ff08aef16237626c59dd70dd0fcc21545478/./src/main.mjs/main.mjs#L173">./src/main.mjs/main.mjs, line 173</a></dd>
+        
+    </div>
+
+        
+
+        
+        
+        
+        
+    </dl>
+</section>
+
+
+    <section  class="props">
+        <h5 class="subsection-title">Properties:</h5>
+        <div class="subsection-content">
+            
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            
+            <th class="last">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+                <td class="name">
+                    <code>
+                        params<span class="signature-attributes"></span>
+                    </code>
+                </td>
+            
+
+            <td class="type">
+                <span class="param">
+                    <code>
+    <span class="param-type">array</span>
+</code>
+                </span>
+            </td>
+
+            
+
+            <td class="description last">
+                <p>Function parameters</p>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            
+                <td class="name">
+                    <code>
+                        body<span class="signature-attributes"></span>
+                    </code>
+                </td>
+            
+
+            <td class="type">
+                <span class="param">
+                    <code>
+    <span class="param-type">string</span>
+</code>
+                </span>
+            </td>
+
+            
+
+            <td class="description last">
+                <p>Function body</p>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            
+                <td class="name">
+                    <code>
+                        type<span class="signature-attributes"></span>
+                    </code>
+                </td>
+            
+
+            <td class="type">
+                <span class="param">
+                    <code>
+    <span class="param-type">string</span>
+</code>
+                </span>
+            </td>
+
+            
+
+            <td class="description last">
+                <p>Function type</p>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            
+                <td class="name">
+                    <code>
+                        hash<span class="signature-attributes">nullable</span>
+                    </code>
+                </td>
+            
+
+            <td class="type">
+                <span class="param">
+                    <code>
+    <span class="param-type">string</span>
+</code>
+                </span>
+            </td>
+
+            
+
+            <td class="description last">
+                <p>Cryptographic hash</p>
+                
+            </td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        </div>
+    </section>
+
+    
+    
+</article><article id="SerializeOptions">
+    <header>
+        <h4 class="name">SerializeOptions</h4>
+        
+        <div class="description"><p>Options for function serialization</p></div>
+    </header>
+    <section  class="details">
+    <dl class="details-list">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+    
+    <div class="detail tag-type">
+        <dt>Type:</dt>
+        
+            <dd><span class="signature type-signature">{<span class="param-type">object</span>}</span></dd>
+        
+    </div>
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    <div class="detail tag-source">
+        <dt>Source:</dt>
+        
+            <dd><a href="https://github.com/EvanK/npm-serialize-function/blob/1354ff08aef16237626c59dd70dd0fcc21545478/./src/main.mjs/main.mjs#L183">./src/main.mjs/main.mjs, line 183</a></dd>
+        
+    </div>
+
+        
+
+        
+        
+        
+        
+    </dl>
+</section>
+
+
+    <section  class="props">
+        <h5 class="subsection-title">Properties:</h5>
+        <div class="subsection-content">
+            
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th class="last">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+                <td class="name">
+                    <code>
+                        comments<span class="signature-attributes">opt</span>
+                    </code>
+                </td>
+            
+
+            <td class="type">
+                <span class="param">
+                    <code>
+    <span class="param-type">boolean</span>
+</code>
+                </span>
+            </td>
+
+            
+                <td class="default">
+                    <pre class="prettyprint lang-json">
+                        <code>false</code>
+                    </pre>
+                </td>
+            
+
+            <td class="description last">
+                <p>Preserves comments</p>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            
+                <td class="name">
+                    <code>
+                        whitespace<span class="signature-attributes">opt</span>
+                    </code>
+                </td>
+            
+
+            <td class="type">
+                <span class="param">
+                    <code>
+    <span class="param-type">boolean</span>
+</code>
+                </span>
+            </td>
+
+            
+                <td class="default">
+                    <pre class="prettyprint lang-json">
+                        <code>false</code>
+                    </pre>
+                </td>
+            
+
+            <td class="description last">
+                <p>Preserves whitespace</p>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            
+                <td class="name">
+                    <code>
+                        hash<span class="signature-attributes">opt</span>
+                    </code>
+                </td>
+            
+
+            <td class="type">
+                <span class="param">
+                    <code>
+    <span class="param-type">boolean</span>
+</code>
+                </span>
+            </td>
+
+            
+                <td class="default">
+                    <pre class="prettyprint lang-json">
+                        <code>false</code>
+                    </pre>
+                </td>
+            
+
+            <td class="description last">
+                <p>Enables SHA256 hashing of function being serialized</p>
+                
+            </td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        </div>
+    </section>
+
+    
+    
+</article><article id="DeserializeOptions">
+    <header>
+        <h4 class="name">DeserializeOptions</h4>
+        
+        <div class="description"><p>Options for function deserialization</p></div>
+    </header>
+    <section  class="details">
+    <dl class="details-list">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+    
+    <div class="detail tag-type">
+        <dt>Type:</dt>
+        
+            <dd><span class="signature type-signature">{<span class="param-type">object</span>}</span></dd>
+        
+    </div>
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    <div class="detail tag-source">
+        <dt>Source:</dt>
+        
+            <dd><a href="https://github.com/EvanK/npm-serialize-function/blob/1354ff08aef16237626c59dd70dd0fcc21545478/./src/main.mjs/main.mjs#L192">./src/main.mjs/main.mjs, line 192</a></dd>
+        
+    </div>
+
+        
+
+        
+        
+        
+        
+    </dl>
+</section>
+
+
+    <section  class="props">
+        <h5 class="subsection-title">Properties:</h5>
+        <div class="subsection-content">
+            
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th class="last">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+                <td class="name">
+                    <code>
+                        hash<span class="signature-attributes">opt</span>
+                    </code>
+                </td>
+            
+
+            <td class="type">
+                <span class="param">
+                    <code>
+    <span class="param-type">boolean</span>
+</code>
+                </span>
+            </td>
+
+            
+                <td class="default">
+                    <pre class="prettyprint lang-json">
+                        <code>false</code>
+                    </pre>
+                </td>
+            
+
+            <td class="description last">
+                <p>Enables SHA256 validating of serialized function's hash</p>
+                
+            </td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        </div>
+    </section>
+
+    
+    
+</article>
+            </div>
+        
+    </section>
+
+    
+</article>
+<aside class="content-aside">
+    
+    
+        <div class="toc toc-tiny">
+            <h2 class="page-title"><span class="ancestors"></span>Globals</h2>
+            <details class="toc-container">
+                <summary class="toc-title">Table of Contents</summary>
+                <nav class="toc-content"><ul><li><h5 class="toc-section"><a href="#methods">Methods</a></h5><ul><li><a href="#serialize"><span class="type-signature">(async) </span>serialize</a></li><li><a href="#deserialize"><span class="type-signature">(async) </span>deserialize</a></li><li><a href="#deepSerialize"><span class="type-signature">(async) </span>deepSerialize</a></li><li><a href="#deepDeserialize"><span class="type-signature">(async) </span>deepDeserialize</a></li></ul></li><li><h5 class="toc-section"><a href="#typedefs">Type Definitions</a></h5><ul><li><a href="#InvokableFunction">InvokableFunction</a></li><li><a href="#SerializedFunction">SerializedFunction</a></li><li><a href="#SerializeOptions">SerializeOptions</a></li><li><a href="#DeserializeOptions">DeserializeOptions</a></li></ul></li></ul></nav>
+            </details>
+        </div>
+        <div class="toc toc-regular">
+            <nav class="toc-container">
+                <h5 class="toc-title">Table of Contents</h5>
+                <div class="toc-content"><ul><li><h5 class="toc-section"><a href="#methods">Methods</a></h5><ul><li><a href="#serialize"><span class="type-signature">(async) </span>serialize</a></li><li><a href="#deserialize"><span class="type-signature">(async) </span>deserialize</a></li><li><a href="#deepSerialize"><span class="type-signature">(async) </span>deepSerialize</a></li><li><a href="#deepDeserialize"><span class="type-signature">(async) </span>deepDeserialize</a></li></ul></li><li><h5 class="toc-section"><a href="#typedefs">Type Definitions</a></h5><ul><li><a href="#InvokableFunction">InvokableFunction</a></li><li><a href="#SerializedFunction">SerializedFunction</a></li><li><a href="#SerializeOptions">SerializeOptions</a></li><li><a href="#DeserializeOptions">DeserializeOptions</a></li></ul></li></ul></div>
+            </nav>
+        </div>
+    
+</aside>
+        <footer>
+            Generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a>
+            using <a href="https://github.com/sleelin/classy-template">classy-template</a>
+            
+                <span class="creation-timestamp">2026-08-08T18:37:16.319Z</span>
+            
+        </footer>
+    </main>
+    <script>hljs.highlightAll();</script>
+</body>
+
+</html>
