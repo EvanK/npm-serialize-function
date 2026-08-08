@@ -24,11 +24,11 @@ jobs:
         cache: 'npm'
 
     - name: Set target as specified input tag
-      if: ${{ github.event.inputs.tag }} != ''
+      if: ${{ github.event.inputs.tag != '' }}
       run: echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
       id: from_input
     - name: Set target as latest available tag
-      if: ${{ github.event.inputs.tag }} == ''
+      if: ${{ github.event.inputs.tag == '' }}
       run: echo "TAG=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_OUTPUT
       id: from_git
     - name: Checkout latest tag
