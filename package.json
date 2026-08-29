@@ -45,10 +45,10 @@
     "test": "npm run clean && npm run dist && npm run prepare-test-node && npm run test-node && npm run prepare-test-browser && npm run test-browser"
   },
   "devDependencies": {
-    "@babel/cli": "^7.29.7",
-    "@babel/core": "^7.29.7",
-    "@babel/plugin-transform-nullish-coalescing-operator": "^7.29.7",
-    "@babel/preset-env": "^7.29.7",
+    "@babel/cli": "^8.0.4",
+    "@babel/core": "^8.0.1",
+    "@babel/plugin-transform-nullish-coalescing-operator": "^8.0.1",
+    "@babel/preset-env": "^8.0.2",
     "@eslint/js": "^10.0.1",
     "@fastify/static": "^10.1.3",
     "@stylistic/eslint-plugin": "^5.10.0",
