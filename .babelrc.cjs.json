@@ -5,9 +5,12 @@
       {
         "modules": "commonjs",
         "targets": {
-          "node": "20"
+          "node": "22"
         }
       }
     ]
-  ]
+  ],
+  "targets":{
+    "node": "22"
+  }
 }
