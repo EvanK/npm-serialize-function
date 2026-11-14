@@ -48,6 +48,9 @@ jobs:
     # browser target unit tests
     - name: Disable AppArmor (for puppeteer)
       run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
+    - name: Run puppeteer postinstall
+      run: npm run postinstall
+      working-directory: ./node_modules/puppeteer
     - name: Unit tests for browser build target (mocha browser)
       run: npm run prepare-test-browser && npm run test-browser
       env:
